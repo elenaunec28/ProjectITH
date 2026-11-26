@@ -13,7 +13,7 @@ MAX_RATING = 5
 
 class Review(models.Model):
     booking = models.OneToOneField(
-        'Booking',
+        Booking,
         on_delete=models.CASCADE,
         related_name='review',
         verbose_name=_('booking'),
@@ -41,7 +41,7 @@ class Review(models.Model):
 
     def clean(self):
         if self._state.adding and self.booking_id:
-            from bookings.models import BookingStatus
+            from apps.bookings.models import BookingStatus
 
             if self.booking.status != BookingStatus.CONFIRMED:
                 raise ValidationError(_('Only confirmed bookings can be reviewed.'))

@@ -49,6 +49,12 @@ class Listing(models.Model):
         verbose_name = _('listing')
         verbose_name_plural = _('listings')
         ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['is_active', 'city'], name='listing_active_city_idx'),
+            models.Index(fields=['is_active', 'price'], name='listing_active_price_idx'),
+            models.Index(fields=['is_active', 'property_type'], name='listing_active_type_idx'),
+            models.Index(fields=['is_active', '-created_at'], name='listing_active_created_idx'),
+        ]
         constraints = [
             models.CheckConstraint(
                 condition=Q(price__gt=0),
