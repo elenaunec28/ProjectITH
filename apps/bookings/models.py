@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -7,6 +8,9 @@ from django.db.models import Q, F
 from django.utils.translation import gettext_lazy as _
 
 from apps.listings.models import Listing
+
+
+MAX_BOOKING_HORIZON = timedelta(days=360)
 
 
 class BookingStatus(models.TextChoices):
@@ -89,6 +93,9 @@ class Booking(models.Model):
         if self._state.adding:
             if self.start_date and self.start_date < timezone.localdate():
                 errors.append(_('Check-in date cannot be in the past.'))
+
+            if self.start_date and self.start_date > timezone.localdate() + MAX_BOOKING_HORIZON:
+                errors.append(_('Bookings can be made no more than 360 days in advance.'))
 
             if self.listing_id:
                 if not self.listing.is_active:
