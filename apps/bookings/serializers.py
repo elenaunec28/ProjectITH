@@ -7,7 +7,7 @@ from .models import Booking
 
 class BookingSerializer(serializers.ModelSerializer):
     listing_title = serializers.CharField(source='listing.title', read_only=True)
-    tenant_name = serializers.CharField(source='tenant.first_name', read_only=True)
+    tenant_name = serializers.CharField(source='tenant.username', read_only=True)
 
     class Meta:
         model = Booking

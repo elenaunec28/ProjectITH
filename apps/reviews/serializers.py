@@ -6,7 +6,7 @@ from .models import Review
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    author_name = serializers.CharField(source='booking.tenant.first_name', read_only=True)
+    author_name = serializers.CharField(source='booking.tenant.username', read_only=True)
     listing = serializers.IntegerField(source='booking.listing_id', read_only=True)
 
     class Meta:

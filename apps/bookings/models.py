@@ -3,7 +3,6 @@ from django.db import models
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.core.validators import MinValueValidator
 from django.db.models import Q, F
 from django.utils.translation import gettext_lazy as _
 
@@ -40,7 +39,10 @@ class Booking(models.Model):
         _('total price'),
         max_digits=10,
         decimal_places=2,
-        editable=False)
+        editable=False,
+        blank=True,
+        null=True,
+    )
 
     status = models.CharField(
         _('status'),
@@ -102,10 +104,10 @@ class Booking(models.Model):
 
         errors = []
 
-        if self.start_date and self.start_date < timezone.localdate():
+        if self.start_date < timezone.localdate():
             errors.append(_('Check-in date cannot be in the past.'))
 
-        if self.start_date and self.start_date > timezone.localdate() + MAX_BOOKING_HORIZON:
+        if self.start_date > timezone.localdate() + MAX_BOOKING_HORIZON:
             errors.append(_('Bookings can be made no more than %(days)s days in advance.')
                 % {'days': MAX_BOOKING_HORIZON.days})
 

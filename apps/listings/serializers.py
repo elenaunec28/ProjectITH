@@ -4,7 +4,7 @@ from .models import Listing
 
 
 class ListingSerializer(serializers.ModelSerializer):
-    owner_name = serializers.CharField(source='owner.first_name', read_only=True)
+    owner_name = serializers.CharField(source='owner.username', read_only=True)
 
     class Meta:
         model = Listing

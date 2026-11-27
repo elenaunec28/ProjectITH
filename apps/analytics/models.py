@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from listings.models import Listing
+from apps.listings.models import Listing
 
 
 class SearchHistory(models.Model):

@@ -6,6 +6,8 @@ from django.db import models
 from django.db.models import Q, F
 from django.utils.translation import gettext_lazy as _
 
+from apps.core.models import SoftDeleteModel
+
 
 MAX_ROOMS = 20
 
@@ -16,7 +18,7 @@ class PropertyType(models.TextChoices):
     STUDIO = 'studio', _('Studio')
     ROOM = 'room', _('Room')
 
-class Listing(models.Model):
+class Listing(SoftDeleteModel):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
